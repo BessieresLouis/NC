@@ -1,0 +1,44 @@
+[
+  {
+    "id": "ncf_1705300000000",
+    "numero": "NCF24-01-03",
+    "date": "2024-01-15",
+    "fournisseur": "Formica",
+    "emetteur": "Caroline M.",
+    "defaut": "Stratifié rayé sur plusieurs panneaux.",
+    "criticite": "non-conformite",
+    "traitement": "remplacement",
+    "statut": "ouverte",
+    "observation": "Attente du retour fournisseur.",
+    "programme": "PO-042",
+    "quantite": "12"
+  },
+  {
+    "id": "ncf_1706200000000",
+    "numero": "NCF24-02-07",
+    "date": "2024-02-02",
+    "fournisseur": "Bois du Nord",
+    "emetteur": "Yannick L.",
+    "defaut": "Quantité livrée incomplète sur AC23/04567.",
+    "criticite": "alerte",
+    "traitement": "avoir",
+    "statut": "cloturee",
+    "observation": "Avoir validé par la comptabilité.",
+    "programme": "HB-118",
+    "quantite": "4"
+  },
+  {
+    "id": "ncf_1709500000000",
+    "numero": "NCF24-03-12",
+    "date": "2024-03-11",
+    "fournisseur": "Metalux",
+    "emetteur": "Louis R.",
+    "defaut": "Châssis endommagés à la réception.",
+    "criticite": "non-conformite",
+    "traitement": "reparation",
+    "statut": "ouverte",
+    "observation": "Réparation interne en cours.",
+    "programme": "HM-221",
+    "quantite": "6"
+  }
+]

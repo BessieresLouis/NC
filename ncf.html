@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NCF - Fiche détaillée</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">Polytech · Qualité</p>
+      <h1 id="pageTitle">Fiche NCF</h1>
+      <p id="pageSubtitle">Création ou mise à jour d'une non-conformité fournisseur.</p>
+    </div>
+    <div class="header-actions">
+      <a class="button ghost" href="index.html">Retour à la liste</a>
+      <button id="editToggle" class="button primary" hidden>Passer en modification</button>
+      <button id="saveButton" class="button primary" hidden>Enregistrer</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel wide">
+      <div class="panel-header">
+        <div>
+          <h2>Détails</h2>
+          <p class="muted" id="modeLabel"></p>
+        </div>
+        <span id="statusBadge" class="badge open">Ouverte</span>
+      </div>
+
+      <form id="ncfForm" class="form-grid">
+        <label>
+          Numéro de NCF
+          <input type="text" name="numero" required />
+        </label>
+        <label>
+          Date
+          <input type="date" name="date" required />
+        </label>
+        <label>
+          Emetteur
+          <input type="text" name="emetteur" required />
+        </label>
+        <label>
+          Fournisseur
+          <input type="text" name="fournisseur" required />
+        </label>
+        <label>
+          Programme impacté
+          <input type="text" name="programme" placeholder="Ex : PO-042" />
+        </label>
+        <label>
+          Quantité non-conforme
+          <input type="number" name="quantite" min="0" step="1" />
+        </label>
+        <label>
+          Criticité
+          <select name="criticite" required>
+            <option value="non-conformite">Non-conformité</option>
+            <option value="alerte">Alerte</option>
+          </select>
+        </label>
+        <label>
+          Traitement
+          <select name="traitement">
+            <option value="remplacement">Remplacement</option>
+            <option value="reparation">Réparation</option>
+            <option value="avoir">Avoir</option>
+            <option value="derogation">Dérogation</option>
+          </select>
+        </label>
+        <label>
+          Statut
+          <select name="statut" required>
+            <option value="ouverte">Ouverte</option>
+            <option value="cloturee">Clôturée</option>
+          </select>
+        </label>
+        <label class="span-2">
+          Défaut
+          <textarea name="defaut" rows="3" required></textarea>
+        </label>
+        <label class="span-2">
+          Observation
+          <textarea name="observation" rows="3"></textarea>
+        </label>
+        <div class="form-actions span-2">
+          <button type="button" id="cancelButton" class="button ghost">Annuler</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="ncf.js" type="module"></script>
+</body>
+</html>

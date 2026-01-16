@@ -1,11 +1,9 @@
+import { loadItems } from "./storage.js";
+
 const tableBody = document.getElementById("ncfTable");
 const resultCount = document.getElementById("resultCount");
 const filtersForm = document.getElementById("filters");
 const resetFiltersButton = document.getElementById("resetFilters");
-const toggleFormButton = document.getElementById("toggleForm");
-const formPanel = document.getElementById("formPanel");
-const ncfForm = document.getElementById("ncfForm");
-const cancelFormButton = document.getElementById("cancelForm");
 const rowTemplate = document.getElementById("rowTemplate");
 
 let ncfItems = [];
@@ -13,6 +11,14 @@ let ncfItems = [];
 const formatDate = (value) => {
   if (!value) return "-";
   return new Date(value).toLocaleDateString("fr-FR");
+};
+
+const createActionLink = (label, href, variant = "ghost") => {
+  const link = document.createElement("a");
+  link.textContent = label;
+  link.href = href;
+  link.className = `button ${variant}`;
+  return link;
 };
 
 const renderTable = (items) => {
@@ -33,6 +39,16 @@ const renderTable = (items) => {
     badge.className = `badge ${item.statut === "cloturee" ? "closed" : "open"}`;
     badge.textContent = item.statut === "cloturee" ? "Clôturée" : "Ouverte";
     statusCell.append(badge);
+
+    const actionsCell = row.querySelector("[data-field='actions']");
+    const actionsWrapper = document.createElement("div");
+    actionsWrapper.className = "table-actions";
+    actionsWrapper.append(
+      createActionLink("Visualiser", `ncf.html?mode=view&id=${item.id}`),
+      createActionLink("Modifier", `ncf.html?mode=edit&id=${item.id}`, "primary")
+    );
+    actionsCell.append(actionsWrapper);
+
     tableBody.append(row);
   });
   resultCount.textContent = `${items.length} résultat${items.length > 1 ? "s" : ""}`;
@@ -67,48 +83,17 @@ const applyFilters = () => {
   renderTable(filtered);
 };
 
-const toggleForm = (show) => {
-  formPanel.hidden = !show;
-  toggleFormButton.textContent = show ? "Masquer le formulaire" : "Nouvelle NCF";
-};
-
-const loadData = async () => {
-  const response = await fetch("data.json");
-  ncfItems = await response.json();
-  renderTable(ncfItems);
-};
-
 filtersForm.addEventListener("input", applyFilters);
 resetFiltersButton.addEventListener("click", () => {
   filtersForm.reset();
   renderTable(ncfItems);
 });
 
-ncfForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const data = new FormData(ncfForm);
-  const newItem = Object.fromEntries(data.entries());
-  ncfItems = [
-    {
-      ...newItem,
-      date: newItem.date,
-    },
-    ...ncfItems,
-  ];
-  ncfForm.reset();
-  toggleForm(false);
-  renderTable(ncfItems);
-});
-
-cancelFormButton.addEventListener("click", () => {
-  ncfForm.reset();
-  toggleForm(false);
-});
-
-toggleFormButton.addEventListener("click", () => {
-  toggleForm(formPanel.hidden);
-});
-
-loadData().catch((error) => {
-  console.error("Erreur de chargement des données:", error);
-});
+loadItems()
+  .then((items) => {
+    ncfItems = items;
+    renderTable(ncfItems);
+  })
+  .catch((error) => {
+    console.error("Erreur de chargement des données:", error);
+  });

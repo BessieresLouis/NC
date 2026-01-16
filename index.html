@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gestion des NCF - Prototype Web</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1>Gestion des Non-Conformités Fournisseurs (NCF)</h1>
+      <p>Prototype web sans base de données (JSON local).</p>
+    </div>
+    <div class="header-actions">
+      <button id="resetFilters" class="ghost">Réinitialiser les filtres</button>
+      <button id="toggleForm" class="primary">Nouvelle NCF</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <h2>Filtres</h2>
+      <form id="filters" class="grid">
+        <label>
+          Numéro de NCF
+          <input type="text" name="numero" placeholder="NCF24-01-03" />
+        </label>
+        <label>
+          Fournisseur
+          <input type="text" name="fournisseur" placeholder="Ex : Formica" />
+        </label>
+        <label>
+          Criticité
+          <select name="criticite">
+            <option value="">Toutes</option>
+            <option value="non-conformite">Non-conformité</option>
+            <option value="alerte">Alerte</option>
+          </select>
+        </label>
+        <label>
+          Statut
+          <select name="statut">
+            <option value="">Tous</option>
+            <option value="ouverte">Ouverte</option>
+            <option value="cloturee">Clôturée</option>
+          </select>
+        </label>
+        <label>
+          Date début
+          <input type="date" name="dateDebut" />
+        </label>
+        <label>
+          Date fin
+          <input type="date" name="dateFin" />
+        </label>
+        <label class="span-2">
+          Recherche globale
+          <input type="search" name="search" placeholder="Défaut, observation, AC..." />
+        </label>
+      </form>
+    </section>
+
+    <section class="panel wide">
+      <div class="panel-header">
+        <h2>Liste des NCF</h2>
+        <p id="resultCount">0 résultat</p>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>NCF</th>
+              <th>Date</th>
+              <th>Fournisseur</th>
+              <th>Défaut</th>
+              <th>Criticité</th>
+              <th>Traitement</th>
+              <th>Statut</th>
+            </tr>
+          </thead>
+          <tbody id="ncfTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel wide" id="formPanel" hidden>
+      <div class="panel-header">
+        <h2>Nouvelle NCF</h2>
+        <p>Les données sont stockées en mémoire pour cette session.</p>
+      </div>
+      <form id="ncfForm" class="form-grid">
+        <label>
+          Numéro de NCF
+          <input type="text" name="numero" required />
+        </label>
+        <label>
+          Date
+          <input type="date" name="date" required />
+        </label>
+        <label>
+          Fournisseur
+          <input type="text" name="fournisseur" required />
+        </label>
+        <label>
+          Criticité
+          <select name="criticite" required>
+            <option value="non-conformite">Non-conformité</option>
+            <option value="alerte">Alerte</option>
+          </select>
+        </label>
+        <label>
+          Traitement
+          <select name="traitement">
+            <option value="remplacement">Remplacement</option>
+            <option value="reparation">Réparation</option>
+            <option value="avoir">Avoir</option>
+            <option value="derogation">Dérogation</option>
+          </select>
+        </label>
+        <label>
+          Statut
+          <select name="statut" required>
+            <option value="ouverte">Ouverte</option>
+            <option value="cloturee">Clôturée</option>
+          </select>
+        </label>
+        <label class="span-2">
+          Défaut
+          <textarea name="defaut" rows="3" required></textarea>
+        </label>
+        <label class="span-2">
+          Observation
+          <textarea name="observation" rows="3"></textarea>
+        </label>
+        <div class="form-actions span-2">
+          <button type="submit" class="primary">Enregistrer</button>
+          <button type="button" id="cancelForm" class="ghost">Annuler</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <template id="rowTemplate">
+    <tr>
+      <td data-field="numero"></td>
+      <td data-field="date"></td>
+      <td data-field="fournisseur"></td>
+      <td data-field="defaut"></td>
+      <td data-field="criticite"></td>
+      <td data-field="traitement"></td>
+      <td data-field="statut"></td>
+    </tr>
+  </template>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>
